@@ -2,5 +2,7 @@
 
 ## Restful API
 
-### [Restful API 中 PATCH 和 PUT 请求类型的区别？](./RestfulAPI/Restful-API中PATCH和PUT请求类型的区别.md)
+### [HTTP 请求方法](./RestfulAPI/HTTP请求方法.md)
+
+### [HTTP 响应码](./RestfulAPI/HTTP响应代码.md)
 
