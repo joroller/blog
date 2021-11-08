@@ -12,9 +12,9 @@ $ ssh-keygen -t rsa -C "your_email@youremail.com"
 
 1 Generating public/private rsa key pair.
 
-2 Enter file in which to save the key (/home/you/.ssh/id_rsa):
+2 Enter file in which to save the key (xxx/id_rsa):
 
-3 Created directory '/c/Users/Administrator/.ssh'.
+3 Created directory 'xxx/.ssh'.
 
 4 Enter passphrase (empty for no passphrase):
 
