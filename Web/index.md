@@ -4,4 +4,6 @@
 
 ## [AngularJS](./AngularJS/index.md)
 
+## [JavaScript](./JavaScript/index.md)
+
 
