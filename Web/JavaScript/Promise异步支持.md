@@ -26,8 +26,8 @@ Promise 是一个有状态的对象，可能处于如下 3 种状态之一：
 ## 执行函数
 
 由于 Promise 对象的状态是私有的，所以只能在内部进行操作。内部操作在Promise 对象的执行器函数中完成。
-执行器函数主要有两项职责：初始化 Promise 对象的异步行为和控制状态的最终转换。其中，控制Promise 对象状态的转换是
-通过调用它的两个函数参数实现的。这两个函数参数通常都命名为 resolve() 和 reject()。
+执行器函数主要有两项职责：初始化 Promise 对象的异步行为和控制状态的最终转换。其中，控制Promise 对象状态的转换是通过调用它的两个函数参数实现的。
+这两个函数参数通常都命名为 resolve() 和 reject()。
 调用 resolve() 会把状态切换为兑现，调用 reject() 会把状态切换为拒绝。
 
 执行函数可以简单的理解为创建 Promise 对象时，为构造方法所提供的参数，只是这个参数是一个方法。这个方法中默认有两个参数，
@@ -91,7 +91,7 @@ let onRejected = () => {console.log('rejected')};  // 这里的代码不会执�
 p.then(onResolved, onRejected);
 ```
 
-reject() 处理程序被执行
+onReject() 处理程序被执行
 ```javascript
 let p = new Promise((resolve, reject) => {
   setTimeout(() => {
@@ -205,15 +205,15 @@ p.then(onResolved, onRejected);
 
 ## Promise 链
 
-多个 Promis 组合在一起可以构成强大的代码逻辑。这种组合可以通过两种方式实现：Promis 链与 Promis合成。
-前者就是一个 Promis 接一个 Promis 地拼接，后者则是将多个 Promis 组合为一个 Promise。
+多个 Promise 组合在一起可以构成强大的代码逻辑。这种组合可以通过两种方式实现：Promise 链与 Promise 合成。
+前者就是一个 Promise 接一个 Promise 地拼接，后者则是将多个 Promise 组合为一个 Promise。
 
-把 Promis 逐个地串联起来是一种非常有用的编程模式。之所以可以这样做，是因为每个 Promise 实例的方
-法（ then()、 catch()和 finally()）都会返回一个新的 Promise 对象，而这个新 Promise 又有自己的实例方法。
+把 Promise 逐个地串联起来是一种非常有用的编程模式。之所以可以这样做，是因为每个 Promise 实例的方
+法（ then()、 catch() 和 finally()）都会返回一个新的 Promise 对象，而这个新 Promise 又有自己的实例方法。
 这样连缀方法调用就可以构成所谓的“Promise 链”。
 
-要实现 Promise 链，则需要将**每个执行器都返回（return）一个 Promise 实例**。这样就可以让每
-个后续 Promise 都等待之前的 Promise，也就是**串行化异步任务**。
+要实现 Promise 链，则需要将**每个执行器都返回（return）一个 Promise 实例**。
+这样就可以让每个后续 Promise 都等待之前的 Promise，也就是**串行化异步任务**。
 
 **举例**：
 ```javascript
@@ -262,7 +262,7 @@ p4 executor
 
 ## Promise 合成
 
-Promise 合成会将多个 Promis 组合为一个 Promise.
+Promise 合成会将多个 Promise 组合为一个 Promise.
 
 Promise 类提供两个将多个 Promise 实例组合成一个 Promise 的静态方法： Promise.all() 和 Promise.race()。
 而合成后 Promise 的行为取决于内部 Promise 的行为。
@@ -287,11 +287,11 @@ let p = Promise.all([
 
 ### Promise.race()
 
-Promise.race()静态方法返回一个包装 Promise ，是一组集合中最先解决或拒绝的 Promise 的镜像。这个
-方法接收一个可迭代对象，返回一个新 Promise ：
+Promise.race() 静态方法返回一个包装 Promise ，是一组集合中最先解决或拒绝的 Promise 的镜像。这个
+方法接收一个可迭代对象，返回一个新 Promise：
 
 ```javascript
-let p = Promise.all([
+let p = Promise.race([
   Promise.resolve(),
   Promise.resolve()
 ]);
@@ -299,11 +299,14 @@ let p = Promise.all([
 
 **注意**：
 
-* Promise.race() 不会对解决或拒绝的 Promise 区别对待。无论是解决还是拒绝，只要是第一个落定的 Promise ，Promise.race()就会包装其解决值或拒绝理由并返回新 Promise 。
-* 如果有一个 Promise 拒绝，只要它是第一个落定的，就会成为拒绝合成 Promise 的理由。之后再拒绝的 Promise 不会影响最终 Promise 的拒绝理由。不过，这并不影响所有包含 Promise 正常的拒绝操作。
+* Promise.race() 不会对解决或拒绝的 Promise 区别对待。无论是解决还是拒绝，只要是第一个落定的 Promise，
+  Promise.race() 就会包装其解决值或拒绝理由并返回新 Promise 。
+* 如果有一个 Promise 拒绝，只要它是第一个落定的，就会成为拒绝合成 Promise 的理由。之后再拒绝的 Promise 不会影响最终 Promise 的拒绝理由。
+  不过，这并不影响所有包含 Promise 正常的拒绝操作。
 
 ## 参考
 
 [MDN - Promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+
 [JavaScript高级程序设计(第4版)](https://www.ituring.com.cn/book/2472)
 
