@@ -327,3 +327,7 @@ describe('openModal', function(this: any) {
   })
 });
 ```
+
+## 参考
+
+[官方文档 - Angular directives for Bootstrap](https://angular-ui.github.io/bootstrap/)

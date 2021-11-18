@@ -2,7 +2,7 @@
 
 ## VSCode
 
-### [VSCode在Run-and-Debug栏中运行Grunt任务](./VSCode在Run-and-Debug栏中运行Grunt任务.md)
+### [VSCode 在 Run-and-Debug 栏中运行 Grunt 任务](./basic/VSCode在Run-and-Debug栏中运行Grunt任务.md)
 
 ## 问题收集
 

@@ -15,7 +15,7 @@
 
 该文件中定义的配置（configurations）将直接暴露给 Run and Debug 栏中的配置下拉选，如下：
 
-![Run and Debug栏中的配置选项](/Tool/VSCode/images/Run-and-Debug-configuration.jpg "Run and Debug栏中的配置选项")
+![Run and Debug栏中的配置选项](./images/Run-and-Debug-configuration.jpg "Run and Debug栏中的配置选项")
 
 ## 在 Gruntfile.js 中配置 tasks
 

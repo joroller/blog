@@ -38,6 +38,7 @@ windows: C:\Users\{用户名}\.ssh\
 这里举例为gitlab.com与github.com分别配置，并且已经为它们生成了对应的key了，两个网站的用户名均为admin。
 
 ```
+#gitlab
 Host gitlab.com
     HostName gitlab.com
     User admin
@@ -48,7 +49,7 @@ Host github.com
     HostName github.com
     User admin
     PreferredAuthentications publickey
-    IdentityFile C:\\Users\\\admin\\.ssh\\id_rsa_github
+    IdentityFile C:\\Users\\admin\\.ssh\\id_rsa_github
 ```
 
 **配置项说明**：

@@ -4,7 +4,7 @@
 
 ### 基础知识
 
-#### [AngularJS 数据绑定符号（@ = < & ? ^）的使用](./AngularJS中数据绑定中的符号.md)
+#### [AngularJS 数据绑定符号（@ = < & ? ^）的使用](./basic/AngularJS中数据绑定中的符号.md)
 
 ### 工具使用
 
