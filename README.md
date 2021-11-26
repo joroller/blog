@@ -1,7 +1,7 @@
 # Welcome to Joroller's blog
 
-## [JVM](./JVM/index.md)
+## [JVM](./JVM/README.md)
 
-## [Web](./Web/index.md)
+## [Web](./Web/README.md)
 
-## [Tool](./Tool/index.md)
+## [Tool](./Tool/README.md)
