@@ -47,7 +47,7 @@ $uibModal service 只有一个方法: open(options)。options 参数是一个 ha
 
     * **resolve** - 模态框解析值的对象。详情请参见 [UI Router resolve](https://angular-ui.github.io/bootstrap/#ui-router-resolves)。
 
-* controller (类型: function|string|array, 示例: 'MyModalController') - 模态框实例的 controller，
+* **controller** (类型: function|string|array, 示例: 'MyModalController') - 模态框实例的 controller，
   可以是字符串形式的 controller 名称，也可以是内联控制器函数，可以选择使用数组来封装以使用依赖注入。
   允许 controller-as 语法。可以通过 $uibModalInstance 注入来访问模态框实例。
 
