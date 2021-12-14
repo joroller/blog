@@ -6,4 +6,6 @@
 
 ## [JavaScript](./JavaScript/README.md)
 
+## [TypeScript](./TypeScript/README.md)
+
 

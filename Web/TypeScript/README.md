@@ -1,6 +1,6 @@
 # Web
 
-## JavaScript
+## TypeScript
 
 ### 基础知识
 
