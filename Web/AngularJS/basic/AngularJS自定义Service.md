@@ -54,6 +54,20 @@ AngularJS 中的 $provider 服务有很多方法用来向 $injector 注入器注
 
 ### provider
 
+通过 `$injector` 注册一个 provider 函数， Provider 函数是构造函数，其实例负责为服务提供一个工厂（$get 属性）。
+
+服务提供者名称以其提供的服务名称开头，后面跟着 provider 。例如，$log 服务有一个名为 $logProvider 的提供程序。
+
+服务提供者对象可以有额外的方法，这些方法允许对提供者及其服务进行配置。
+
+重要的是，您可以配置由 `$get` 方法创建的服务类型，或者该服务将如何运行。
+
+可以将其他 `providers` 注入到当前 `provider` 程序函数中，但注入的 `providers` 程序必须在需要它的 `provider` 程序之前定义。
+
+例如：
+
+`$logProvider` 有一个 debugEnabled 方法，它允许你指定 `$log` 服务是否将调试消息记录到控制台。
+
 **API**:
 
 [\$provider.provider(name, provider)](https://docs.angularjs.org/api/auto/service/$provide#provider)
@@ -90,7 +104,7 @@ namespace app.provideLearning {
   .provider('myProvider1', new MyClassWithGet())    // 方法1：provider 为 new 的对象（第2个参数），该对象必须有一个 $get() 工厂方法
                                                     // 当服务被需要时，$get 方法会被 $injector.invoke()
 
-  .provider('myProvider2', MyClassWithGet)          // 方法2：provider 为构造方法（第2个参数）该构造方法会被 $injector.instantiate() 创建实例，然后被当作对象
+  .provider('myProvider2', MyClassWithGet)          // 方法2：provider 为构造函数（第2个参数）该构造函数会被 $injector.instantiate() 创建实例，然后被当作对象
 
   .provider('myProvider3', {                        // 方法3：provider 为 hash 对象（第2个参数），该对象必须有一个 $get() 工厂方法
     // 工厂方法生产带有 doSomething 属性的对象
@@ -112,7 +126,7 @@ namespace app.provideLearning {
 
 
   .config(($provide: any) => {
-    $provide.provider('myProvider5', MyClassWithGet);       // 方法5：provider 为构造方法（第2个参数）该构造方法会被 $injector.instantiate() 创建实例，然后被当作对象
+    $provide.provider('myProvider5', MyClassWithGet);       // 方法5：provider 为构造函数（第2个参数）该构造函数会被 $injector.instantiate() 创建实例，然后被当作对象
   })
 
 
@@ -164,7 +178,8 @@ namespace app.provideLearning {
 
 ### factory
 
-注册一个 服务工厂函数，它将被调用以返回服务实例。这是通过 provider 注册服务的缩写形式，不需要像 provider 那样显示写出 `\$get` 属性并为其赋值，
+注册一个 服务工厂函数，它将被调用以返回服务实例。
+factory 是通过 provider 注册服务的缩写形式，不需要像 provider 那样显示写出 `\$get` 属性并为其赋值，
 通过 factory 来注册服务，会自动将 服务工厂函数 赋值给 provider 的 `\$get` 属性。
 
 **API**:
@@ -186,7 +201,7 @@ namespace app.provideLearning {
 
   angular.module('factoryLearning', [])
 
-  // 方法1：angular 会自动给 $get 属性赋值为 MyClass 构造方法（第二个参数）来组成工厂方法，
+  // 方法1：angular 会自动给 $get 属性赋值为 MyClass 构造函数（第二个参数）来组成工厂方法，
   // 当注入 myFactory1 时，会调用 $get 工厂方法得到 MyClass 的实例，
   // 即可以理解为 myFactory1 就是 MyClass 的实例。
   .factory('myFactory1', MyClass)
@@ -236,7 +251,7 @@ namespace app.provideLearning {
     }
   })
 
-  // 方法6：angular 会自动给 $get 属性赋值为 MyClass 构造方法（第二个参数）来组成工厂方法，
+  // 方法6：angular 会自动给 $get 属性赋值为 MyClass 构造函数（第二个参数）来组成工厂方法，
   // 当注入 myFactory6 时，会调用 $get 工厂方法得到 MyClass 的实例，
   // 即可以理解为 myFactory6 就是 MyClass 的实例。
   .config(($provide: any) => {
@@ -322,8 +337,8 @@ namespace app.provideLearning {
 
 ### service
 
-注册一个服务构造函数，它将被 new 调用以创建服务实例。
-这是通过 provider 注册服务的缩写形式，不需要像 provider 那样显示写出 `\$get` 属性并为其赋值，
+注册一个 service 构造函数，它将被 new 调用以创建服务实例。
+service 是通过 provider 注册服务的缩写形式，不需要像 provider 那样显示写出 `\$get` 属性并为其赋值，
 通过 service 来注册服务，angular 会自动使用一个 工厂函数 来包装构造函数的实例化并返回该实例。
 
 内部看起来有点像这样:
@@ -368,50 +383,50 @@ namespace app.serviceLearning {
 
   angular.module('serviceLearning', [])
 
-  // 方法1：直接传递一个 Calss（构造方法），
-  // angular 会自动给 $get 属性赋值为 Calss 构造方法（第二个参数）来组成工厂方法，
-  // 当注入 myService1 时，会调用 $get 工厂方法得到 构造方法 的实例，
+  // 方法1：直接传递一个 Calss（构造函数），
+  // angular 会自动给 $get 属性赋值为 Calss 构造函数（第二个参数）来组成工厂方法，
+  // 当注入 myService1 时，会调用 $get 工厂方法得到 构造函数 的实例，
   // 即可以理解为 myService1 就是 Calss 的实例。
   .service('myService1', MyClass)
 
-  // 方法2：直接传递一个 构造方法（其实也是一个普通方法），
-  // angular 会自动给 $get 属性赋值为构造方法（第二个参数）来组成工厂方法，
-  // 当注入 myService2 时，会调用 $get 工厂方法得到 构造方法 的实例，
-  // 即可以理解为 myService2 就是 构造方法 的实例。
+  // 方法2：直接传递一个 构造函数（其实也是一个普通方法），
+  // angular 会自动给 $get 属性赋值为构造函数（第二个参数）来组成工厂方法，
+  // 当注入 myService2 时，会调用 $get 工厂方法得到 构造函数 的实例，
+  // 即可以理解为 myService2 就是 构造函数 的实例。
   .service('myService2', function AConstructor(this: any) {
     this.doSomething = () => {
       console.log('myService2 uses constructor function');
     }
   })
 
-  // 方法3：传递一个 Calss（构造方法），该 Class 注入了其他服务（$filter），
-  // angular 会自动给 $get 属性赋值为 Calss 构造方法（第二个参数）来组成工厂方法，
-  // 当注入 myService3 时，会调用 $get 工厂方法得到 构造方法 的实例，
+  // 方法3：传递一个 Calss（构造函数），该 Class 注入了其他服务（$filter），
+  // angular 会自动给 $get 属性赋值为 Calss 构造函数（第二个参数）来组成工厂方法，
+  // 当注入 myService3 时，会调用 $get 工厂方法得到 构造函数 的实例，
   // 即可以理解为 myService3 就是 Calss 的实例。
   .service('myService3', MyClassWithInject)
 
-  // 方法4：传递一个数组，数组中包含一个 构造方法（其实也是一个普通方法），该 构造方法 注入了其他服务（$filter），
-  // angular 会自动给 $get 属性赋值为构造方法（第二个参数）来组成工厂方法，
-  // 当注入 myService4 时，会调用 $get 工厂方法得到 构造方法 的实例，
-  // 即可以理解为 myService4 就是 构造方法 的实例。
+  // 方法4：传递一个数组，数组中包含一个 构造函数（其实也是一个普通方法），该 构造函数 注入了其他服务（$filter），
+  // angular 会自动给 $get 属性赋值为构造函数（第二个参数）来组成工厂方法，
+  // 当注入 myService4 时，会调用 $get 工厂方法得到 构造函数 的实例，
+  // 即可以理解为 myService4 就是 构造函数 的实例。
   .service('myService4', ['$filter', function AConstructor(this: any, $filter: any) {
     this.doSomething = () => {
       console.log('myService4 uses constructor function and use filter: ' + $filter('currency')(1));
     }
   }])
 
-  // 方法5：直接传递一个 Calss（构造方法），
-  // angular 会自动给 $get 属性赋值为 Calss 构造方法（第二个参数）来组成工厂方法，
-  // 当注入 myService5 时，会调用 $get 工厂方法得到 构造方法 的实例，
+  // 方法5：直接传递一个 Calss（构造函数），
+  // angular 会自动给 $get 属性赋值为 Calss 构造函数（第二个参数）来组成工厂方法，
+  // 当注入 myService5 时，会调用 $get 工厂方法得到 构造函数 的实例，
   // 即可以理解为 myService5 就是 Calss 的实例。
   .config(($provide: any) => {
     $provide.service('myService5', MyClass);
   })
 
-  // 方法6：直接传递一个 构造方法（其实也是一个普通方法），
-  // angular 会自动给 $get 属性赋值为构造方法（第二个参数）来组成工厂方法，
-  // 当注入 myService6 时，会调用 $get 工厂方法得到 构造方法 的实例，
-  // 即可以理解为 myService6 就是 构造方法 的实例。
+  // 方法6：直接传递一个 构造函数（其实也是一个普通方法），
+  // angular 会自动给 $get 属性赋值为构造函数（第二个参数）来组成工厂方法，
+  // 当注入 myService6 时，会调用 $get 工厂方法得到 构造函数 的实例，
+  // 即可以理解为 myService6 就是 构造函数 的实例。
   .config(($provide: any) => {
     $provide.service('myService6', function AConstructor(this: any) {
       this.doSomething = () => {
@@ -420,18 +435,18 @@ namespace app.serviceLearning {
     });
   })
 
-  // 方法7：传递一个 Calss（构造方法），该 Class 注入了其他服务（$filter），
-  // angular 会自动给 $get 属性赋值为 Calss 构造方法（第二个参数）来组成工厂方法，
-  // 当注入 myService7 时，会调用 $get 工厂方法得到 构造方法 的实例，
+  // 方法7：传递一个 Calss（构造函数），该 Class 注入了其他服务（$filter），
+  // angular 会自动给 $get 属性赋值为 Calss 构造函数（第二个参数）来组成工厂方法，
+  // 当注入 myService7 时，会调用 $get 工厂方法得到 构造函数 的实例，
   // 即可以理解为 myService7 就是 Calss 的实例。
   .config(($provide: any) => {
     $provide.service('myService7', MyClassWithInject);
   })
 
-  // 方法8：传递一个数组，数组中包含一个 构造方法（其实也是一个普通方法），该 构造方法 注入了其他服务（$filter），
-  // angular 会自动给 $get 属性赋值为构造方法（第二个参数）来组成工厂方法，
-  // 当注入 myService8 时，会调用 $get 工厂方法得到 构造方法 的实例，
-  // 即可以理解为 myService8 就是 构造方法 的实例。
+  // 方法8：传递一个数组，数组中包含一个 构造函数（其实也是一个普通方法），该 构造函数 注入了其他服务（$filter），
+  // angular 会自动给 $get 属性赋值为构造函数（第二个参数）来组成工厂方法，
+  // 当注入 myService8 时，会调用 $get 工厂方法得到 构造函数 的实例，
+  // 即可以理解为 myService8 就是 构造函数 的实例。
   .config(($provide: any) => {
     $provide.service('myService8', ['$filter', function AConstructor(this: any, $filter: any) {
       this.doSomething = () => {
@@ -462,7 +477,297 @@ namespace app.serviceLearning {
 
 ### value
 
+使用 `$injector` 注册一个 value 服务，例如字符串、数字、数组、对象或函数。
+value 是通过 provider 注册服务的缩写形式，不需要像 provider 那样显示写出 `\$get` 属性并为其赋值，
+并且这里隐式的 `\$get` 属性是一个工厂函数，但其不接受参数，返回值为 value 服务。这也意味着不可能将其他服务注入到 value 服务中。
+
+**注意**：
+
+value 服务类似于 constant 服务，不同之处是 value **不能被注入到模块的配置函数中**(参见 angular.Module)，并且 value 可以被 AngularJS 的装饰器（decorator）覆盖。
+
+**API**:
+
+[\$provider.value(name, value);](https://docs.angularjs.org/api/auto/service/$provide#value)
+
+[angular.Module.value(name, object);](https://docs.angularjs.org/api/ng/type/angular.Module#value)
+
+**使用方法**:
+
+```typescript
+namespace app.valueLearning {
+
+  class MyClass {
+    doSomething() {
+      console.log('My value is a class');
+    }
+  }
+
+  angular.module('valueLearning', [])
+
+  // 传递一个类（构造函数），
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Calss 构造函数（第二个参数），
+  // 当注入 myValue1 时，会调用 $get 工厂方法并得到返回的 MyClass 构造函数（第二个参数），
+  // 即可以理解为 myValue1 就是 Calss。
+  .value('myValue1', MyClass)
+
+  // 传递一个构造函数，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该构造函数（第二个参数），
+  // 当注入 myValue2 时，会调用 $get 工厂方法并得到返回的该构造函数，
+  // 即可以理解为 myValue2 就是这个构造函数（第二个参数）。
+  .value('myValue2', function AConstructor(this: any) {
+    this.doSomething = () => {
+      console.log('myValue2 return constructor function');
+    }
+  })
+
+  // 传递一个字符串，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该字符串（第二个参数），
+  // 当注入 myValue3 时，会调用 $get 工厂方法并得到返回的该字符串，
+  // 即可以理解为 myValue3 就是这个字符串（第二个参数）。
+  .value('myValue3', 'my Value 3 is a string')
+
+  // 传递一个数组，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该数组（第二个参数），
+  // 当注入 myValue4 时，会调用 $get 工厂方法并得到返回的该数组，
+  // 即可以理解为 myValue4 就是这个数组（第二个参数）。
+  .value('myValue4', ['my', 'value', '4', 'is', 'an', 'array'])
+
+  // 传递一个 hash 对象，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 hash 对象（第二个参数），
+  // 当注入 myValue5 时，会调用 $get 工厂方法并得到返回的该 hash 对象，
+  // 即可以理解为 myValue5 就是这个 hash 对象（第二个参数）。
+  .value('myValue5', {
+    value: 'my value5 is an object'
+  })
+
+
+  // 传递一个类（构造函数），
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Calss 构造函数（第二个参数），
+  // 当注入 myValue1 时，会调用 $get 工厂方法并得到返回的 MyClass 构造函数（第二个参数），
+  // 即可以理解为 myValue1 就是 Calss。
+  .config(($provide: any) => {
+    $provide.value('myValue6', MyClass);
+  })
+
+  // 传递一个构造函数，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该构造函数（第二个参数），
+  // 当注入 myValue2 时，会调用 $get 工厂方法并得到返回的该构造函数，
+  // 即可以理解为 myValue2 就是这个构造函数（第二个参数）。
+  .config(($provide: any) => {
+    $provide.value('myValue7', function AConstructor(this: any) {
+      this.doSomething = () => {
+        console.log('myValue7 is a constructor function');
+      }
+    });
+  })
+
+  // 传递一个字符串，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该字符串（第二个参数），
+  // 当注入 myValue3 时，会调用 $get 工厂方法并得到返回的该字符串，
+  // 即可以理解为 myValue3 就是这个字符串（第二个参数）。
+  .config(($provide: any) => {
+    $provide.value('myValue8', 'my value 8 is string');
+  })
+
+  // 传递一个数组，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该数组（第二个参数），
+  // 当注入 myValue4 时，会调用 $get 工厂方法并得到返回的该数组，
+  // 即可以理解为 myValue4 就是这个数组（第二个参数）。
+  .config(($provide: any) => {
+    $provide.value('myValue9', ['my', 'value', '9', 'is', 'an', 'array']);
+  })
+
+  // 传递一个 hash 对象，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 hash 对象（第二个参数），
+  // 当注入 myValue5 时，会调用 $get 工厂方法并得到返回的该 hash 对象，
+  // 即可以理解为 myValue5 就是这个 hash 对象（第二个参数）。
+  .config(($provide: any) => {
+    $provide.value('myValue10', {
+      value: 'my value10 is an object'
+    });
+  })
+
+  // myValue10 不能被注入到模块的配置函数中。
+  .config(($provide: any, myValue10: any) => {
+    $provide.value('myValue11', {
+      value: 'my value11 is an object'
+    });
+  })
+
+  .run((myValue1: any,
+        myValue2: any,
+        myValue3: any,
+        myValue4: any,
+        myValue5: any,
+        myValue6: any,
+        myValue7: any,
+        myValue8: any,
+        myValue9: any,
+        myValue10: any) => {
+
+    new myValue1().doSomething(); // My value is a class (使用 new 来实例化)
+    new myValue2().doSomething(); // myValue2 return constructor function （使用 new 来实例化）
+    console.log(myValue3);        // my Value 3 is a string
+    console.log(myValue4);        // ['my', 'value', '4', 'is', 'an', 'array']
+    console.log(myValue5.value);  // my value5 is an object
+
+    new myValue6().doSomething(); // My value is a class (使用 new 来实例化)
+    new myValue7().doSomething(); // myValue7 return constructor function （使用 new 来实例化）
+    console.log(myValue8);        // my Value 8 is a string
+    console.log(myValue9);        // ['my', 'value', '9', 'is', 'an', 'array']
+    console.log(myValue10.value);  // my value10 is an object
+  });
+}
+```
+
 ### constant
+
+使用 `$injector` 注册一个 constant  服务，例如字符串、数字、数组、对象或函数。
+与通过 value 注册服务一样，constant 是通过 provider 注册服务的缩写形式，不需要像 provider 那样显示写出 `\$get` 属性并为其赋值，
+并且这里隐式的 `\$get` 属性是一个工厂函数，但其不接受参数，返回值为 constant 服务。这也意味着不可能将其他服务注入到 constant 服务中。
+
+**注意**：
+
+constant 服务类似于 constant 服务，不同之处是 constant **能被注入到模块的配置函数中**(参见 angular.Module)，并且 constant 不可以被 AngularJS 的装饰器（decorator）覆盖。
+
+**API**:
+
+[\$provider.constant(name, value);](https://docs.angularjs.org/api/auto/service/$provide#constant)
+
+[angular.Module.constant(name, object);](https://docs.angularjs.org/api/ng/type/angular.Module#constant)
+
+**使用方法**:
+
+```typescript
+namespace app.constantLearning {
+
+  class MyClass {
+    doSomething() {
+      console.log('My constant is a class');
+    }
+  }
+
+  angular.module('constantLearning', [])
+
+  // 传递一个类（构造函数），
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Calss 构造函数（第二个参数），
+  // 当注入 myConstant1 时，会调用 $get 工厂方法并得到返回的 MyClass 构造函数（第二个参数），
+  // 即可以理解为 myConstant1 就是 Calss。
+  .constant('myConstant1', MyClass)
+
+  // 传递一个构造函数，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该构造函数（第二个参数），
+  // 当注入 myConstant2 时，会调用 $get 工厂方法并得到返回的该构造函数，
+  // 即可以理解为 myConstant2 就是这个构造函数（第二个参数）。
+  .constant('myConstant2', function AConstructor(this: any) {
+    this.doSomething = () => {
+      console.log('myConstant2 return constructor function');
+    }
+  })
+
+  // 传递一个字符串，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该字符串（第二个参数），
+  // 当注入 myConstant3 时，会调用 $get 工厂方法并得到返回的该字符串，
+  // 即可以理解为 myConstant3 就是这个字符串（第二个参数）。
+  .constant('myConstant3', 'my Constant 3 is a string')
+
+  // 传递一个数组，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该数组（第二个参数），
+  // 当注入 myConstant4 时，会调用 $get 工厂方法并得到返回的该数组，
+  // 即可以理解为 myConstant4 就是这个数组（第二个参数）。
+  .constant('myConstant4', ['my', 'constant', '4', 'is', 'an', 'array'])
+
+  // 传递一个 hash 对象，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 hash 对象（第二个参数），
+  // 当注入 myConstant5 时，会调用 $get 工厂方法并得到返回的该 hash 对象，
+  // 即可以理解为 myConstant5 就是这个 hash 对象（第二个参数）。
+  .constant('myConstant5', {
+    constant: 'my constant5 is an object'
+  })
+
+
+  // 传递一个类（构造函数），
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Calss 构造函数（第二个参数），
+  // 当注入 myConstant1 时，会调用 $get 工厂方法并得到返回的 MyClass 构造函数（第二个参数），
+  // 即可以理解为 myConstant1 就是 Calss。
+  .config(($provide: any) => {
+    $provide.constant('myConstant6', MyClass);
+  })
+
+  // 传递一个构造函数，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该构造函数（第二个参数），
+  // 当注入 myConstant2 时，会调用 $get 工厂方法并得到返回的该构造函数，
+  // 即可以理解为 myConstant2 就是这个构造函数（第二个参数）。
+  .config(($provide: any) => {
+    $provide.constant('myConstant7', function AConstructor(this: any) {
+      this.doSomething = () => {
+        console.log('myConstant7 is a constructor function');
+      }
+    });
+  })
+
+  // 传递一个字符串，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该字符串（第二个参数），
+  // 当注入 myConstant3 时，会调用 $get 工厂方法并得到返回的该字符串，
+  // 即可以理解为 myConstant3 就是这个字符串（第二个参数）。
+  .config(($provide: any) => {
+    $provide.constant('myConstant8', 'my constant 8 is string');
+  })
+
+  // 传递一个数组，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该数组（第二个参数），
+  // 当注入 myConstant4 时，会调用 $get 工厂方法并得到返回的该数组，
+  // 即可以理解为 myConstant4 就是这个数组（第二个参数）。
+  .config(($provide: any) => {
+    $provide.constant('myConstant9', ['my', 'constant', '9', 'is', 'an', 'array']);
+  })
+
+  // 传递一个 hash 对象，
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 hash 对象（第二个参数），
+  // 当注入 myConstant5 时，会调用 $get 工厂方法并得到返回的该 hash 对象，
+  // 即可以理解为 myConstant5 就是这个 hash 对象（第二个参数）。
+  .config(($provide: any) => {
+    $provide.constant('myConstant10', {
+      constant: 'my constant10 is an object'
+    });
+  })
+
+  // myConstant10 可以被注入到模块的配置函数中。
+  .config(($provide: any, myConstant10: any) => {
+    $provide.constant('myConstant11', {
+      constant: 'my constant11 is an object',
+      myConstant10: myConstant10
+    });
+  })
+
+  .run((myConstant1: any,
+        myConstant2: any,
+        myConstant3: any,
+        myConstant4: any,
+        myConstant5: any,
+        myConstant6: any,
+        myConstant7: any,
+        myConstant8: any,
+        myConstant9: any,
+        myConstant10: any,
+        myConstant11: any) => {
+
+    new myConstant1().doSomething(); // My constant is a class (使用 new 来实例化)
+    new myConstant2().doSomething(); // myConstant2 return constructor function （使用 new 来实例化）
+    console.log(myConstant3);        // my Constant 3 is a string
+    console.log(myConstant4);        // ['my', 'constant', '4', 'is', 'an', 'array']
+    console.log(myConstant5.constant);  // my constant5 is an object
+
+    new myConstant6().doSomething(); // My constant is a class (使用 new 来实例化)
+    new myConstant7().doSomething(); // myConstant7 return constructor function （使用 new 来实例化）
+    console.log(myConstant8);        // my Constant 8 is a string
+    console.log(myConstant9);        // ['my', 'constant', '9', 'is', 'an', 'array']
+    console.log(myConstant10.constant);  // my constant10 is an object
+    console.log(myConstant11.constant);  // my constant11 is an object
+    console.log(myConstant11.myConstant10.constant);  // my constant10 is an object
+  });
+}
+```
 
 ### decorator
 
