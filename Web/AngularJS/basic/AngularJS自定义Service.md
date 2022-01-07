@@ -383,10 +383,10 @@ namespace app.serviceLearning {
 
   angular.module('serviceLearning', [])
 
-  // 方法1：直接传递一个 Calss（构造函数），
-  // angular 会自动给 $get 属性赋值为 Calss 构造函数（第二个参数）来组成工厂方法，
+  // 方法1：直接传递一个 Class（构造函数），
+  // angular 会自动给 $get 属性赋值为 Class 构造函数（第二个参数）来组成工厂方法，
   // 当注入 myService1 时，会调用 $get 工厂方法得到 构造函数 的实例，
-  // 即可以理解为 myService1 就是 Calss 的实例。
+  // 即可以理解为 myService1 就是 Class 的实例。
   .service('myService1', MyClass)
 
   // 方法2：直接传递一个 构造函数（其实也是一个普通方法），
@@ -399,10 +399,10 @@ namespace app.serviceLearning {
     }
   })
 
-  // 方法3：传递一个 Calss（构造函数），该 Class 注入了其他服务（$filter），
-  // angular 会自动给 $get 属性赋值为 Calss 构造函数（第二个参数）来组成工厂方法，
+  // 方法3：传递一个 Class（构造函数），该 Class 注入了其他服务（$filter），
+  // angular 会自动给 $get 属性赋值为 Class 构造函数（第二个参数）来组成工厂方法，
   // 当注入 myService3 时，会调用 $get 工厂方法得到 构造函数 的实例，
-  // 即可以理解为 myService3 就是 Calss 的实例。
+  // 即可以理解为 myService3 就是 Class 的实例。
   .service('myService3', MyClassWithInject)
 
   // 方法4：传递一个数组，数组中包含一个 构造函数（其实也是一个普通方法），该 构造函数 注入了其他服务（$filter），
@@ -415,10 +415,10 @@ namespace app.serviceLearning {
     }
   }])
 
-  // 方法5：直接传递一个 Calss（构造函数），
-  // angular 会自动给 $get 属性赋值为 Calss 构造函数（第二个参数）来组成工厂方法，
+  // 方法5：直接传递一个 Class（构造函数），
+  // angular 会自动给 $get 属性赋值为 Class 构造函数（第二个参数）来组成工厂方法，
   // 当注入 myService5 时，会调用 $get 工厂方法得到 构造函数 的实例，
-  // 即可以理解为 myService5 就是 Calss 的实例。
+  // 即可以理解为 myService5 就是 Class 的实例。
   .config(($provide: any) => {
     $provide.service('myService5', MyClass);
   })
@@ -435,10 +435,10 @@ namespace app.serviceLearning {
     });
   })
 
-  // 方法7：传递一个 Calss（构造函数），该 Class 注入了其他服务（$filter），
-  // angular 会自动给 $get 属性赋值为 Calss 构造函数（第二个参数）来组成工厂方法，
+  // 方法7：传递一个 Class（构造函数），该 Class 注入了其他服务（$filter），
+  // angular 会自动给 $get 属性赋值为 Class 构造函数（第二个参数）来组成工厂方法，
   // 当注入 myService7 时，会调用 $get 工厂方法得到 构造函数 的实例，
-  // 即可以理解为 myService7 就是 Calss 的实例。
+  // 即可以理解为 myService7 就是 Class 的实例。
   .config(($provide: any) => {
     $provide.service('myService7', MyClassWithInject);
   })
@@ -505,9 +505,9 @@ namespace app.valueLearning {
   angular.module('valueLearning', [])
 
   // 传递一个类（构造函数），
-  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Calss 构造函数（第二个参数），
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Class 构造函数（第二个参数），
   // 当注入 myValue1 时，会调用 $get 工厂方法并得到返回的 MyClass 构造函数（第二个参数），
-  // 即可以理解为 myValue1 就是 Calss。
+  // 即可以理解为 myValue1 就是 Class。
   .value('myValue1', MyClass)
 
   // 传递一个构造函数，
@@ -542,9 +542,9 @@ namespace app.valueLearning {
 
 
   // 传递一个类（构造函数），
-  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Calss 构造函数（第二个参数），
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Class 构造函数（第二个参数），
   // 当注入 myValue1 时，会调用 $get 工厂方法并得到返回的 MyClass 构造函数（第二个参数），
-  // 即可以理解为 myValue1 就是 Calss。
+  // 即可以理解为 myValue1 就是 Class。
   .config(($provide: any) => {
     $provide.value('myValue6', MyClass);
   })
@@ -650,9 +650,9 @@ namespace app.constantLearning {
   angular.module('constantLearning', [])
 
   // 传递一个类（构造函数），
-  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Calss 构造函数（第二个参数），
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Class 构造函数（第二个参数），
   // 当注入 myConstant1 时，会调用 $get 工厂方法并得到返回的 MyClass 构造函数（第二个参数），
-  // 即可以理解为 myConstant1 就是 Calss。
+  // 即可以理解为 myConstant1 就是 Class。
   .constant('myConstant1', MyClass)
 
   // 传递一个构造函数，
@@ -687,9 +687,9 @@ namespace app.constantLearning {
 
 
   // 传递一个类（构造函数），
-  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Calss 构造函数（第二个参数），
+  // 当调用 $get 属性对应的工厂方法时，angular 会返回该 Class 构造函数（第二个参数），
   // 当注入 myConstant1 时，会调用 $get 工厂方法并得到返回的 MyClass 构造函数（第二个参数），
-  // 即可以理解为 myConstant1 就是 Calss。
+  // 即可以理解为 myConstant1 就是 Class。
   .config(($provide: any) => {
     $provide.constant('myConstant6', MyClass);
   })
@@ -770,6 +770,70 @@ namespace app.constantLearning {
 ```
 
 ### decorator
+
+
+使用 `$injector` 注册一个 decorator  服务。
+decorator 函数会拦截原始服务的创建，它被允许覆盖或修改原始服务的行为。decorator 函数的返回值可以是原始服务，也可以是替换(或包装和委托)原始服务的新服务
+
+**API**:
+
+[\$provider.decorator(name, decorator);](https://docs.angularjs.org/api/auto/service/$provide#decorator)
+
+[angular.Module.constant(name, object);](https://docs.angularjs.org/api/ng/type/angular.Module#decorator)
+
+**使用方法**
+
+[How to use decorators](https://docs.angularjs.org/guide/decorators)
+
+**使用方法**:
+
+```typescript
+namespace app.serviceLearning {
+
+  class MyClass {
+    doSomething() {
+      console.log('MyClass doSomething()');
+    }
+  }
+
+  class MyDecoratorClass {
+    doSomething() {
+      console.log('MyDecoratorClass doSomething()');
+    }
+  }
+
+  angular.module('decoratorLearning', [])
+
+  .service('myService1', MyClass)
+
+  // 使用 MyDecoratorClass 来替换 myService1
+  .decorator('myService1', MyDecoratorClass)
+
+  .service('myService1_1', MyClass)
+
+  // 使用 构造函数 来包装 myService1_1
+  .decorator('myService1_1',  ['$delegate', function AConstructor($delegate: MyClass) {
+    // 返回被包装的原始服务
+    return $delegate;
+  }])
+  .config(($provide: any) => {
+    $provide.service('myService2', MyClass);
+  })
+
+  // 使用 MyDecoratorClass 来替换 myService2
+  .config(($provide: any) => {
+    $provide.service('myService2', MyDecoratorClass);
+  })
+
+  .run((myService1: any,
+        myService1_1: any,
+        myService2: any) => {
+    myService1.doSomething();     // MyDecoratorClass doSomething()
+    myService1_1.doSomething();   // MyClass doSomething()
+    myService2.doSomething();     // MyDecoratorClass doSomething()
+  });
+}
+```
 
 
 ## 参考
