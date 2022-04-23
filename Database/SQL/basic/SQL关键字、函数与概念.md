@@ -26,6 +26,12 @@ IS NULL/IS NOT NULL
 
 BETWEEN AND
 
+IN
+
+ALL
+
+SOME
+
 NOT
 
 LIKE
@@ -131,6 +137,8 @@ MAX() - 返回某列的最大值
 MIN() - 返回某列的最小值
 
 SUM() - 返回某列值的和
+
+
 
 
 
